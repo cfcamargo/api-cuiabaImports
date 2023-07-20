@@ -7,13 +7,34 @@ export default class ProductsController {
         const ITEMS_PER_PAGE = 16
         try {
             const pageNumber = Number(request.input('page', 1))
+            const titleFilter = request.input('title', '')
+            const brandFilter = request.input('brand', '')
+            const categoryFilter = request.input('category', '')
 
-            const transformedProducts:productProps[] = await this.fetchAndTransformProducts()
+            let transformedProducts:productProps[] = await this.fetchAndTransformProducts()
+
+            if(titleFilter !== ''){
+              transformedProducts = transformedProducts.filter(product => product.title.toLowerCase().includes(titleFilter.toLowerCase()))
+            }
+
+            if(brandFilter !== ''){
+              transformedProducts = transformedProducts.filter(product => product.brand.toLowerCase().includes(brandFilter.toLowerCase()))
+            }
+
+            if(categoryFilter!== ''){
+              transformedProducts = transformedProducts.filter(product => product.category.toLowerCase().includes(categoryFilter.toLowerCase()))
+            }
+
 
             const start = (pageNumber - 1) * ITEMS_PER_PAGE
             const end = start + ITEMS_PER_PAGE
 
-            response.send(transformedProducts.slice(start, end))
+            const data = {
+              products: transformedProducts.slice(start, end),
+              links: Math.floor(transformedProducts.length / ITEMS_PER_PAGE),
+            }
+
+            response.send(data)
           } catch (error) {
             response.status(500).send('An error occurred while fetching data')
           }
