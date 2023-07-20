@@ -43,7 +43,7 @@ export default class ProductsController {
 
 
     async fetchAndTransformProducts() {
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/1AKt4Y52MOVm8PSqaUWlqjQj3Z0b6HhlEpm1cP9HFf6I/values/bd?key=AIzaSyACM4HoC4QRxpm9KeCaCoF4Frq7THGfMhE`
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_SPREADSHEET_ID}/values/bd?key=${process.env.GOOGLE_SHEETS_API_KEY}`
         const apiResponse = await axios.get(url)
 
         const transformedProducts:productProps[] = []
