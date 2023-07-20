@@ -2,42 +2,33 @@ import axios from 'axios'
 import productProps from 'models/product'
 
 export default class ProductsController {
-
     public async index({request, response}) {
-        const ITEMS_PER_PAGE = 16
         try {
-            const pageNumber = Number(request.input('page', 1))
+            const mostType = request.input('most')
 
             const transformedProducts:productProps[] = await this.fetchAndTransformProducts()
 
-            const start = (pageNumber - 1) * ITEMS_PER_PAGE
-            const end = start + ITEMS_PER_PAGE
+            const mostProducts:productProps[] = []
 
-            response.send(transformedProducts.slice(start, end))
-          } catch (error) {
-            response.status(500).send('An error occurred while fetching data')
-          }
-    }
-
-    public async show({params, response}) {
-        try {
-            const productId = Number(params.id)
-
-            const transformedProducts:productProps[] = await this.fetchAndTransformProducts()
-
-            const product = transformedProducts.find(product => product.id === productId)
-
-            if(!product){
-                return response.status(404).send({ error: 'Product not found' })
-            } else {
-                response.send(product)
+            if(mostType === 'sell'){
+                transformedProducts.map((product:productProps) => {
+                    if(product.mostSellHome && mostProducts.length < 10){
+                      mostProducts.push(product)
+                    }
+                })
+            } else if(mostType === 'search'){
+                transformedProducts.map((product:productProps) => {
+                  if(product.mostSearchShop && mostProducts.length < 10){
+                    mostProducts.push(product)
+                  }
+              })
             }
 
+            response.send(mostProducts)
           } catch (error) {
             response.status(500).send('An error occurred while fetching data')
           }
     }
-
 
     async fetchAndTransformProducts() {
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_SPREADSHEET_ID}/values/bd?key=${process.env.GOOGLE_SHEETS_API_KEY}`
