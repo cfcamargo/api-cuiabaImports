@@ -8,10 +8,12 @@ export default class ProductsController {
 
             const transformedProducts:productProps[] = await this.fetchAndTransformProducts()
 
+
             const mostProducts:productProps[] = []
 
             if(mostType === 'sell'){
                 transformedProducts.map((product:productProps) => {
+                    console.log(product)
                     if(product.mostSellHome && mostProducts.length < 10){
                       mostProducts.push(product)
                     }
@@ -39,8 +41,6 @@ export default class ProductsController {
 
         apiResponse.data.values.map((product) => {
           if(product[0] !== 'id' && product[16] === 'Sim' || product[0] !== 'id' && product[16] === 'sim'){
-            console.log(product[9])
-            console.log(product[10])
             let transformedProduct = {
                 id : Number(product[0]),
                 qtd : Number(product[1]),
@@ -51,8 +51,8 @@ export default class ProductsController {
                 category : product[6],
                 cover : product[7],
                 videoURL : product[8],
-                mostSellHome : product[9].toUpperCase === 'SIM' ? true : false,
-                mostSearchShop : product[10].toUpperCase === 'NAO' ? true : false,
+                mostSellHome : product[9] === 'SIM' ? true : false,
+                mostSearchShop : product[10] === 'NAO' ? true : false,
                 variants : product[11].split(','),
             }
 
