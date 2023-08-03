@@ -67,6 +67,7 @@ export default class ProductsController {
         const transformedProducts:productProps[] = []
 
         apiResponse.data.values.map((product) => {
+
           if(product[0] !== 'id' && product[16] === 'Sim' || product[0] !== 'id' && product[16] === 'sim'){
             let transformedProduct = {
                 id : Number(product[0]),
@@ -78,8 +79,8 @@ export default class ProductsController {
                 category : product[6],
                 cover : product[7],
                 videoURL : product[8],
-                mostSellHome : product[9] === 'sim',
-                mostSearchShop : product[10] === 'sim',
+                mostSellHome : product[9] === 'SIM' ? true : false,
+                mostSearchShop : product[10] === 'NAO' ? true : false,
                 variants : product[11].split(','),
             }
 
