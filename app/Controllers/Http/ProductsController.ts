@@ -5,8 +5,8 @@ export default class ProductsController {
 
     public async index({request, response}) {
 
-      const perPage = Number(request.input('perPage', 1))
-      const ITEMS_PER_PAGE = perPage ? perPage : 15
+      const perPage = Number(request.input('perPage', 15))
+      const ITEMS_PER_PAGE = perPage
 
         try {
             const pageNumber = Number(request.input('page', 1))
