@@ -4,7 +4,10 @@ import productProps from 'models/product'
 export default class ProductsController {
 
     public async index({request, response}) {
-        const ITEMS_PER_PAGE = 16
+
+      const perPage = Number(request.input('perPage', 1))
+      const ITEMS_PER_PAGE = perPage ? perPage : 15
+
         try {
             const pageNumber = Number(request.input('page', 1))
             const titleFilter = request.input('title', '')
