@@ -13,13 +13,13 @@ export default class ProductsController {
 
             if(mostType === 'sell'){
                 transformedProducts.map((product:productProps) => {
-                    console.log(product)
                     if(product.mostSellHome && mostProducts.length < 10){
                       mostProducts.push(product)
                     }
                 })
             } else if(mostType === 'search'){
                 transformedProducts.map((product:productProps) => {
+                  console.log(product.mostSearchShop)
                   if(product.mostSearchShop && mostProducts.length < 10){
                     mostProducts.push(product)
                   }
@@ -52,7 +52,7 @@ export default class ProductsController {
                 cover : product[7],
                 videoURL : product[8],
                 mostSellHome : product[9] === 'SIM' ? true : false,
-                mostSearchShop : product[10] === 'NAO' ? true : false,
+                mostSearchShop : product[10] === 'SIM' ? true : false,
                 variants : product[11].split(','),
             }
 

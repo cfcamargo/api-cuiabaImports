@@ -83,7 +83,7 @@ export default class ProductsController {
                 cover : product[7],
                 videoURL : product[8],
                 mostSellHome : product[9] === 'SIM' ? true : false,
-                mostSearchShop : product[10] === 'NAO' ? true : false,
+                mostSearchShop : product[10] === 'SIM' ? true : false,
                 variants : product[11].split(','),
             }
 
