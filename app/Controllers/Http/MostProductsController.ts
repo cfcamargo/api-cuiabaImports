@@ -40,7 +40,7 @@ export default class ProductsController {
         const transformedProducts:productProps[] = []
 
         apiResponse.data.values.map((product) => {
-          if(product[0] !== 'id' && product[16] === 'Sim' || product[0] !== 'id' && product[16] === 'sim'){
+          if(product[0] !== 'id' && product[17] === 'Sim' || product[0] !== 'id' && product[17] === 'sim'){
             let transformedProduct = {
                 id : Number(product[0]),
                 qtd : Number(product[1]),

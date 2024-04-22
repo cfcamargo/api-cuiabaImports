@@ -28,7 +28,6 @@ export default class ProductsController {
               transformedProducts = transformedProducts.filter(product => product.category.toLowerCase().includes(categoryFilter.toLowerCase()))
             }
 
-
             const start = (pageNumber - 1) * ITEMS_PER_PAGE
             const end = start + ITEMS_PER_PAGE
 
@@ -67,11 +66,10 @@ export default class ProductsController {
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${process.env.GOOGLE_SHEETS_SPREADSHEET_ID}/values/PRODUTOS_LOJA?key=${process.env.GOOGLE_SHEETS_API_KEY}`
 
         const apiResponse = await axios.get(url)
-        const transformedProducts:productProps[] = []
+        const transformedProductsList:productProps[] = []
 
         apiResponse.data.values.map((product) => {
-
-          if(product[0] !== 'id' && product[16] === 'Sim' || product[0] !== 'id' && product[16] === 'sim'){
+          if(product[0] !== 'ID' && product[17] === 'Sim' || product[0] !== 'id' && product[17] === 'sim'){
             let transformedProduct = {
                 id : Number(product[0]),
                 qtd : Number(product[1]),
@@ -87,10 +85,9 @@ export default class ProductsController {
                 variants : product[11].split(','),
             }
 
-            transformedProducts.push(transformedProduct)
+            transformedProductsList.push(transformedProduct)
           }
         })
-
-        return transformedProducts
+        return transformedProductsList
     }
 }
