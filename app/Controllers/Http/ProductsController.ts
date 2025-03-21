@@ -39,6 +39,7 @@ export default class ProductsController {
       const data = {
         products: transformedProducts.slice(start, end),
         links: Math.ceil(transformedProducts.length / perPage),
+        total: transformedProducts.length,
       };
 
       response.send(data);
